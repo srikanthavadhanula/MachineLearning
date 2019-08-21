@@ -44,3 +44,39 @@ regressor.fit(X_train,Y_train)
 Y_pred = regressor.predict(X_test)
 
 
+import statsmodels.formula.api as sm
+X = np.append(arr = np.ones((50, 1)).astype(int), values = X , axis = 1)
+X_opt = X[:, [0, 1, 2, 3, 4, 5]]
+regressor_OLS = sm.OLS(endog=Y, exog=X_opt).fit()
+regressor_OLS.summary()
+
+#Here are we going through the P values and eliminating the highest P value
+#P value for index 2 is high, so remove it 
+
+X_opt = X[:, [0, 1, 3, 4, 5]]
+regressor_OLS = sm.OLS(endog=Y, exog=X_opt).fit()
+regressor_OLS.summary()
+
+# P value for index 1 is .0940 so remove it 
+
+X_opt = X[:, [0, 3, 4, 5]]
+regressor_OLS = sm.OLS(endog=Y, exog=X_opt).fit()
+regressor_OLS.summary()
+
+# P value for index 4
+
+X_opt = X[:, [0, 3, 5]]
+regressor_OLS = sm.OLS(endog=Y, exog=X_opt).fit()
+regressor_OLS.summary()
+
+# Even though the 5th index has only 1 % more than the required P value 
+# If we are stricktly following the rule we need to remove
+
+X_opt = X[:, [0, 3]]
+regressor_OLS = sm.OLS(endog=Y, exog=X_opt).fit()
+regressor_OLS.summary()
+
+# If we observe there are no indexes with more P value
+# So this is the final optimum varialbes 
+
+
